@@ -4,11 +4,11 @@
 set -e
 
 # Install micro
-read -r -p "Do you want to install micro (text editor)? (y/n) " response
-if [[ "$response" =~ ^[yY]$ ]]; then
-  echo "Installing micro..."
-  sudo dnf install micro -y
-fi
+# read -r -p "Do you want to install micro (text editor)? (y/n) " response
+# if [[ "$response" =~ ^[yY]$ ]]; then
+#   echo "Installing micro..."
+#   sudo dnf install micro -y
+# fi
 
 # Edit dnf config file
 read -r -p "Do you want to configure DNF? (y/n) " response
@@ -34,22 +34,24 @@ fi
 read -r -p "Do you want to install RPM Fusion Free? (y/n) " response
 if [[ "$response" =~ ^[yY]$ ]]; then
   echo "Installing RPM Fusion Free..."
-  sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm -y
+  sudo dnf install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm -y
 fi
 
 # Install RPM Fusion Non-Free
 read -r -p "Do you want to install RPM Fusion Non-Free? (y/n) " response
 if [[ "$response" =~ ^[yY]$ ]]; then
   echo "Installing RPM Fusion Non-Free..."
-  sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
+  sudo dnf install \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
 fi
 
 # Install GUI Core Group
-read -r -p "Do you want to update core GUI group? (y/n) " response
-if [[ "$response" =~ ^[yY]$ ]]; then
-  echo "Updating core GUI group..."
-  sudo dnf group update core -y
-fi
+# read -r -p "Do you want to update core GUI group? (y/n) " response
+# if [[ "$response" =~ ^[yY]$ ]]; then
+#   echo "Updating core GUI group..."
+#   sudo dnf group update core -y
+# fi
 
 # Install Flatpak
 read -r -p "Do you want to install Flatpak? (y/n) " response
@@ -83,12 +85,7 @@ fi
 #   chsh -s /usr/bin/fish
 # fi
 
-# Install Git
-read -r -p "Do you want to install Git? (y/n) " response
-if [[ "$response" =~ ^[yY]$ ]]; then
-  echo "Installing Git..."
-  sudo dnf install git -y
-fi
+
 
 # Download AppImageLauncher
 read -r -p "Do you want to install AppImageLauncher? (y/n) " response

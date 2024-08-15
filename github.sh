@@ -1,7 +1,17 @@
 #!/bin/bash
 
+# Install Git
+read -r -p "Do you want to install Git? (y/n) " response
+if [[ "$response" =~ ^[yY]$ ]]; then
+  echo "Installing Git..."
+  sudo dnf install git -y
+fi
 # Set your email address
+name="aarjaycreation"
 email="aarjaycreation@gmail.com"
+
+git config --global user.name "$name"
+git config --global user.email "$email"
 
 # Generate a new SSH key pair
 ssh-keygen -t ed25519 -C "$email"
