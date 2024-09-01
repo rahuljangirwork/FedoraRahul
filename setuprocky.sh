@@ -264,11 +264,29 @@ install_essential_tools() {
 disable_root_ssh_login() {
     confirm_installation "Do you want to disable root SSH login?" || return 0
     log_info "Disabling root SSH login..."
-    if ! sudo sed -i 's/^PermitRootLogin.*/PermitRootLogin no/' $SSH_CONFIG || ! sudo systemctl restart sshd; then
-        log_error "Failed to disable root SSH login."
+    
+    # Modify the PermitRootLogin setting, ensuring the line exists
+    if grep -q "^PermitRootLogin" $SSH_CONFIG; then
+        if ! sudo sed -i 's/^PermitRootLogin.*/PermitRootLogin no/' $SSH_CONFIG; then
+            log_error "Failed to modify PermitRootLogin setting."
+            return 1
+        fi
+    else
+        if ! sudo bash -c "echo 'PermitRootLogin no' >> $SSH_CONFIG"; then
+            log_error "Failed to add PermitRootLogin setting."
+            return 1
+        fi
+    fi
+
+    # Restart SSH service to apply changes
+    if ! sudo systemctl restart sshd; then
+        log_error "Failed to restart SSH service."
         return 1
     fi
+    
+    log_info "Root SSH login disabled."
 }
+
 
 # Function to optimize system performance
 optimize_system_performance() {
