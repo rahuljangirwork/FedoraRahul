@@ -116,12 +116,45 @@ harden_ssh() {
 # Function to install and configure Fail2Ban
 configure_fail2ban() {
     confirm_installation "Do you want to install and configure Fail2Ban?" || return 0
-    log_info "Installing and configuring Fail2Ban..."
-    if ! sudo dnf install -y fail2ban || ! sudo cp /etc/fail2ban/jail.conf $FAIL2BAN_CONFIG || ! sudo systemctl enable --now fail2ban; then
-        log_error "Failed to install or configure Fail2Ban."
+    log_info "Installing Fail2Ban..."
+    
+    if ! sudo dnf install -y fail2ban; then
+        log_error "Failed to install Fail2Ban."
         return 1
     fi
+
+    log_info "Configuring Fail2Ban..."
+    
+    # Create or modify the local jail configuration
+    if ! sudo bash -c 'cat > /etc/fail2ban/jail.local' << EOF
+[DEFAULT]
+# Ban hosts for one hour:
+bantime = 3600
+
+# Number of failures before banning:
+maxretry = 3
+
+# Ignore IPs (whitelist):
+ignoreip = 127.0.0.1/8 ::1
+
+[sshd]
+enabled = true
+EOF
+    then
+        log_error "Failed to configure Fail2Ban."
+        return 1
+    fi
+    
+    log_info "Enabling and starting Fail2Ban service..."
+    
+    if ! sudo systemctl enable --now fail2ban; then
+        log_error "Failed to enable and start Fail2Ban."
+        return 1
+    fi
+    
+    log_info "Fail2Ban installed and configured successfully."
 }
+
 
 # Function to disable IPv6
 disable_ipv6() {
