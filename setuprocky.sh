@@ -299,13 +299,13 @@ disable_root_ssh_login() {
     log_info "Disabling root SSH login..."
     
     # Modify the PermitRootLogin setting, ensuring the line exists
-    if grep -q "^PermitRootLogin" $SSH_CONFIG; then
+    if sudo grep -q "^PermitRootLogin" $SSH_CONFIG; then
         if ! sudo sed -i 's/^PermitRootLogin.*/PermitRootLogin no/' $SSH_CONFIG; then
             log_error "Failed to modify PermitRootLogin setting."
             return 1
         fi
     else
-        if ! sudo bash -c "echo 'PermitRootLogin no' >> $SSH_CONFIG"; then
+        if ! echo 'PermitRootLogin no' | sudo tee -a $SSH_CONFIG > /dev/null; then
             log_error "Failed to add PermitRootLogin setting."
             return 1
         fi
@@ -319,6 +319,7 @@ disable_root_ssh_login() {
     
     log_info "Root SSH login disabled."
 }
+
 
 
 # Function to optimize system performance
