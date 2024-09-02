@@ -107,7 +107,7 @@ success "Disabling IPv6..."
 GRUB_CONF="/etc/default/grub"
 if sudo sed -i '/^GRUB_CMDLINE_LINUX=/d' $GRUB_CONF && \
    echo 'GRUB_CMDLINE_LINUX="ipv6.disable=1"' | sudo tee -a $GRUB_CONF && \
-   sudo grub2-mkconfig -o /boot/grub2/grub.cfg && sudo reboot; then
+   sudo grub2-mkconfig -o /boot/grub2/grub.cfg  then
     success "IPv6 disabled successfully."
 else
     error "Failed to disable IPv6."
