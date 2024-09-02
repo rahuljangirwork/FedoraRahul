@@ -93,13 +93,14 @@ fi
 
 # 8. Install EPEL and RPM Fusion Repositories with nogpgcheck
 success "Installing EPEL and RPM Fusion repositories..."
-if sudo dnf install --nogpgcheck https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.pmg >> "$LOGFILE" 2>&1 && \
+if sudo dnf install --nogpgcheck https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm >> "$LOGFILE" 2>&1 && \
    sudo dnf install --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm >> "$LOGFILE" 2>&1; then
     success "Repositories installed successfully."
 else
     error "Failed to install repositories."
     exit 1
 fi
+
 
 # 9. Stop the SSH Service
 success "Disabling SSH service..."
