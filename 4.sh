@@ -188,3 +188,8 @@ fi
 # Log the end of the script
 echo "Script completed at $(date)" >> "$LOGFILE"
 success "All tasks completed successfully!"
+
+
+
+#Install and Configure Firewall GUI
+#Install TLP for Power Management
