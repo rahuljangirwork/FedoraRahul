@@ -26,7 +26,7 @@ echo "Script started at $(date)" > "$LOGFILE"
 
 # 1. Install and Configure LightDM with KDE Plasma
 success "Installing and configuring LightDM with KDE Plasma..."
-if sudo dnf install -y lightdm lightdm-gtk greeter >> "$LOGFILE" 2>&1 && \
+if sudo dnf install -y lightdm lightdm-gtk >> "$LOGFILE" 2>&1 && \
    sudo systemctl enable lightdm --force >> "$LOGFILE" 2>&1 && \
    sudo systemctl disable gdm >> "$LOGFILE" 2>&1; then
     success "LightDM installed and set as the default display manager."
@@ -34,6 +34,7 @@ else
     error "Failed to install and configure LightDM."
     exit 1
 fi
+
 
 # 2. Install KDE Development Tools
 success "Installing KDE development tools..."
