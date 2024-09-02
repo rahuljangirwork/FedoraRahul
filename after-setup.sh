@@ -176,3 +176,10 @@ main() {
 
 # Execute the main function
 main "$@"
+
+
+
+Enable Swap (if needed) if my system ram is less than 8 gb
+Install and Configure Fail2Ban
+Install Basic Development Tools
+Check for Orphaned Packages
