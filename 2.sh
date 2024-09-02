@@ -116,12 +116,13 @@ success "Disabling IPv6..."
 GRUB_CONF="/etc/default/grub"
 if sudo sed -i '/^GRUB_CMDLINE_LINUX=/d' $GRUB_CONF && \
    echo 'GRUB_CMDLINE_LINUX="ipv6.disable=1"' | sudo tee -a $GRUB_CONF >> "$LOGFILE" && \
-   sudo grub2-mkconfig -o /boot/grub2/grub.cfg >> "$LOGFILE" 2>&1 && sudo reboot; then
-    success "IPv6 disabled successfully."
+   sudo grub2-mkconfig -o /boot/grub2/grub.cfg >> "$LOGFILE" 2>&1; then
+    success "IPv6 disabled successfully. Please reboot the system to apply the changes."
 else
     error "Failed to disable IPv6."
     exit 1
 fi
+
 
 # 11. Optimize System Performance
 success "Optimizing system performance..."
